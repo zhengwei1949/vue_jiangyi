@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="myApp">
+        <input type="text" eric-model="message">
+        <input type="text" eric-model="message">
+        <div>
+            <div>{{message}}</div>
+        </div>
+    </div>
+    <script>
+        var vm = {};
+        Object.defineProperty(vm,'message',{
+            val:null,
+            get:function(){
+                this.val = this.val || '';
+                return this.val;
+            },
+            set:function(val){
+                this.val = val;
+                refresh_view();
+            }
+        });
+        var el = document.querySelector('#myApp');
+
+        //初始化视图
+        function init_view(){
+            var list = el.getElementsByTagName('*');
+            var reg1 = /<.*>/g;
+            var reg2 = /{{(.*)}}/;
+            for(var i=0;i<list.length;i++){
+                // console.log(list[i].innerHTML);
+                if(list[i].tagName!='INPUT' && !reg1.test(list[i].innerHTML) && reg2.test(list[i].innerHTML)){
+                    var myBind = reg2.exec(list[i].innerHTML)[1];
+                    list[i].setAttribute('myBind',myBind);
+                    // console.log(list[i].getAttribute('myBind'))
+                    list[i].innerHTML = vm[list[i].getAttribute('myBind')];
+                }
+                if(list[i].tagName === 'INPUT' && list[i].getAttribute('eric-model')){
+                    var myBind = list[i].getAttribute('eric-model');
+                    list[i].value = vm[list[i].getAttribute('eric-model')];
+                }
+            }
+        }
+
+        init_view();
+
+        function refresh_view(){
+            var list = el.getElementsByTagName('*');
+            for(var i=0;i<list.length;i++){
+                if(list[i].getAttribute('myBind')){
+                    list[i].innerHTML = vm[list[i].getAttribute('myBind')];
+                }
+                if(list[i].getAttribute('eric-model') && list[i].tagName === 'INPUT'){
+                    list[i].value = vm[list[i].getAttribute('eric-model')];
+                }
+            }
+        }
+
+        var modelEleList = document.querySelectorAll('input[eric-model]');
+        console.log(modelEleList);
+        for(var i=0;i<modelEleList.length;i++){
+            modelEleList[i].addEventListener('input',function(){
+                var myBind = this.getAttribute('eric-model');
+                vm[myBind] = this.value;
+            },false);
+        }
+
+    </script>
+</body>
+</html>

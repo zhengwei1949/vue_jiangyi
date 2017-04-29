@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="myApp">
+        <ceshi></ceshi>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.component('ceshi',{
+            template:'<h3>{{abc}}</h3>',
+            data:function(){
+                return {
+                    abc:'我是动态获取的数据'
+                }
+            }
+        });
+
+        var myApp = new Vue({
+            el:'#myApp'
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{counter}}
+    </div>
+    <script src="vue.js"></script>
+    <script>
+
+        var app = new Vue({
+            el:'#app',
+            data:{
+                counter:0
+            },
+            created:function(){
+                var vm = this;
+                setInterval(function(){
+                    vm.counter += 1;
+                },1000);
+            }
+        });
+    </script>
+</body>
+</html>

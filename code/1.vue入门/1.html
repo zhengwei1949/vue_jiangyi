@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{message}}
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        //在控制台里输入app.message = "ceshi"
+        var app = new Vue({
+            el:'#app',
+            data:{
+                message:'Hello Vue'
+            }
+        });
+    </script>
+</body>
+</html>
